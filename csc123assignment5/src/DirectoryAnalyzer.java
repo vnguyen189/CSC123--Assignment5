@@ -3,14 +3,15 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Scanner;
 
 public class DirectoryAnalyzer {
-private String directoryName;
 
-public DirectoryAnalyzer(String directoryName) throws Exception {
-	super();
-	this.directoryName = directoryName;
+public static void main(String[] args) throws IOException {
+	Scanner input = new Scanner(System.in);
 	
+	String directoryName = args[0];
+
 	File directory = new File(directoryName);
 	
 	if(!directory.exists()) {
@@ -52,20 +53,20 @@ public DirectoryAnalyzer(String directoryName) throws Exception {
 	System.out.println("Total Space Chars \t\t\t\t:" + sumSpace + "\n");
 	
 	if (sumfileSize < 1024)
-	System.out.printf("Total Size Disk \t\t\t\t: %.1f bytes \n", sumfileSize);
+	System.out.printf("Total Size Disk \t\t\t\t: %.2f bytes \n", sumfileSize);
 	
-	else if (sumfileSize >= 1024 && sumfileSize < 1024*1000) 
-	System.out.printf("Total Size Disk \t\t\t\t: %.1f KBs \n", (sumfileSize/1000));
+	else if (sumfileSize >= 1024 && sumfileSize < 1024*1024) 
+	System.out.printf("Total Size Disk \t\t\t\t: %.2f KBs \n", (sumfileSize/1024));
 	
-	else if (sumfileSize >= 1024*1000 && sumfileSize < 1024*1000000) 
-	System.out.printf("Total Size Disk \t\t\t\t: %.1f MBs \n", (sumfileSize/1000000));
+	else if (sumfileSize >= 1024*1024 && sumfileSize < 1024*1048576) 
+	System.out.printf("Total Size Disk \t\t\t\t: %.2f MBs \n", (sumfileSize/1048576));
 	
-	else if (sumfileSize >= 1024*1000000 && sumfileSize < 1024*1000000000)
-	System.out.printf("Total Size Disk \t\t\t\t: %.1f GBs \n", (sumfileSize/1000000000));
+	else if (sumfileSize >= 1024*1048576 && sumfileSize < (1024*(1024*1024*1024)))
+	System.out.printf("Total Size Disk \t\t\t\t: %.2f GBs \n", (sumfileSize/(1024*1024*1024)));
 	
 }
 
-	private int countSpace (File f) throws IOException {
+	private static int countSpace (File f) throws IOException {
 		int spaceCounter = 0;
 		InputStream in = new FileInputStream(f);
 		byte b;
@@ -76,7 +77,7 @@ public DirectoryAnalyzer(String directoryName) throws Exception {
 		in.close();
 		return spaceCounter;
 	}
-	private int countAlphabet (File f) throws IOException {
+	private static int countAlphabet (File f) throws IOException {
 		int alphabetCounter = 0;
 		InputStream in = new FileInputStream(f);
 		byte b;
@@ -88,7 +89,7 @@ public DirectoryAnalyzer(String directoryName) throws Exception {
 		return alphabetCounter;
 	}
 	
-	private int countDigit (File f) throws IOException {
+	private static int countDigit (File f) throws IOException {
 		int digitCounter = 0;
 		InputStream in = new FileInputStream(f);
 		byte b;
@@ -99,4 +100,5 @@ public DirectoryAnalyzer(String directoryName) throws Exception {
 		in.close();
 		return digitCounter;
 	}
+
 	}
